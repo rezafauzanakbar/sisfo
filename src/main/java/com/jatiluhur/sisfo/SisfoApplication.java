@@ -8,6 +8,7 @@ public class SisfoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SisfoApplication.class, args);
+		System.out.println("apol");
 	}
 
 }
