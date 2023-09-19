@@ -3,6 +3,8 @@ package com.jatiluhur.sisfo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +22,9 @@ public class BeritaController {
     private BeritaService beritaService;
 
     @GetMapping("/get")
-    public List<Berita> getAllBerita(){
-        return beritaService.getAllBerita();
+    public ResponseEntity<Object> findAll(HttpServletRequest request)
+    {
+        return beritaService.findAll(request);
     }
 
     @GetMapping("get/{id}")
