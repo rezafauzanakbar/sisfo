@@ -15,7 +15,7 @@ public class Berita {
     private Long id;
 
     @Column(name = "nik")
-    private Long nik;
+    private String nik;
 
     @Column(name = "post")
     private String post;
@@ -31,11 +31,11 @@ public class Berita {
         this.id = id;
     }
 
-    public Long getNik() {
+    public String getNik() {
         return nik;
     }
 
-    public void setNik(Long nik) {
+    public void setNik(String nik) {
         this.nik = nik;
     }
 
