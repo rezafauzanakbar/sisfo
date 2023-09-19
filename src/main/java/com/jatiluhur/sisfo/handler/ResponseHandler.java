@@ -22,7 +22,7 @@ public class ResponseHandler {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("message", message);
         map.put("status", status.value());
-        map.put("", responseObj==null?"":responseObj);
+        map.put("data", responseObj==null?"":responseObj);
         map.put("timestamp", new Date());
         map.put("success",!status.isError());
         if(errorCode != null)

@@ -21,11 +21,11 @@ public class BeritaController {
     
     private BeritaService beritaService;
 
-    @GetMapping("/get")
-    public ResponseEntity<Object> findAll(HttpServletRequest request)
-    {
-        return beritaService.findAll(request);
-    }
+//    @GetMapping("/get")
+//    public ResponseEntity<Object> findAll(HttpServletRequest request)
+//    {
+//        return beritaService.findAll(request);
+//    }
 
     @GetMapping("get/{id}")
     public ResponseEntity<Berita> getBeritaById(@PathVariable Long id){

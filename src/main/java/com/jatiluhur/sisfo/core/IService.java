@@ -1,10 +1,12 @@
 package com.jatiluhur.sisfo.core;
 
+import com.jatiluhur.sisfo.model.Kip;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 public interface IService<T> {
     public ResponseEntity<Object> save(T t, HttpServletRequest request);//001-010
@@ -16,4 +18,6 @@ public interface IService<T> {
     public ResponseEntity<Object> findAllByPage(Integer page,Integer size, HttpServletRequest request);//061-070
     public ResponseEntity<Object> findAll(HttpServletRequest request);//071-080
     public ResponseEntity<Object> dataToExport(MultipartFile multipartFile, HttpServletRequest request);//081-090
+
+//    public ResponseEntity<Object> deleteByNik(String nik, HttpServletRequest request);
 }
