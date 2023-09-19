@@ -1,9 +1,9 @@
 package com.jatiluhur.sisfo.service;
 import com.jatiluhur.sisfo.handler.RequestCapture;
 import com.jatiluhur.sisfo.handler.ResponseHandler;
-import com.jatiluhur.sisfo.model.Kip;
+import com.jatiluhur.sisfo.model.Feed;
 import com.jatiluhur.sisfo.util.TransformDataPaging;
-import com.jatiluhur.sisfo.repo.KipRepo;
+import com.jatiluhur.sisfo.repo.FeedRepo;
 import com.jatiluhur.sisfo.core.IService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,20 +16,20 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class KipService implements IService<Kip>{
-    private KipRepo kipRepo;
+public class FeedService implements IService<Feed>{
+    private FeedRepo feedRepo;
     private String[] strExceptionArr = new String[2];
     private TransformDataPaging transformDataPaging = new TransformDataPaging();
     private Map<String, Object> mapz = new HashMap<>();
 
-    public KipService(KipRepo kipRepo) {
-        strExceptionArr[0] = "KipService";
-        this.kipRepo = kipRepo;
+    public FeedService(FeedRepo feedRepo) {
+        strExceptionArr[0] = "FeedService";
+        this.feedRepo = feedRepo;
     }
 
     @Override
-    public ResponseEntity<Object> save(Kip kip, HttpServletRequest request) {
-        if (kip == null) {
+    public ResponseEntity<Object> save(Feed feed, HttpServletRequest request) {
+        if (feed == null) {
             return new ResponseHandler().generateResponse(
                     "Data tidak valid", HttpStatus.BAD_REQUEST,
                     null, "FE002000", request
@@ -37,9 +37,9 @@ public class KipService implements IService<Kip>{
         }
 
         try {
-            kipRepo.save(kip);
+            feedRepo.save(feed);
         } catch (Exception e) {
-            strExceptionArr[1] = "save(Kip kip, HttpServletRequest request) --- LINE 59 \n"+ RequestCapture.allRequest(request);
+            strExceptionArr[1] = "save(Feed feed, HttpServletRequest request) --- LINE 59 \n"+ RequestCapture.allRequest(request);
             return new ResponseHandler().generateResponse(
                     "Data Gagal Disimpan",//message
                     HttpStatus.INTERNAL_SERVER_ERROR,//httpstatus
@@ -59,7 +59,7 @@ public class KipService implements IService<Kip>{
     }
 
     @Override
-    public ResponseEntity<Object> update(Long id, Kip kip, HttpServletRequest request) throws Exception {
+    public ResponseEntity<Object> update(Long id, Feed feed, HttpServletRequest request) throws Exception {
         return null;
     }
 
@@ -69,7 +69,7 @@ public class KipService implements IService<Kip>{
     }
 
     @Override
-    public ResponseEntity<Object> saveBatch(List<Kip> lt, HttpServletRequest request) {
+    public ResponseEntity<Object> saveBatch(List<Feed> lt, HttpServletRequest request) {
         return null;
     }
 
@@ -90,10 +90,10 @@ public class KipService implements IService<Kip>{
 
     @Override
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
-        List<Kip> listKip;
+        List<Feed> listFeed;
         try{
-            listKip = kipRepo.findAll();
-            if(listKip.size()==0){
+            listFeed = feedRepo.findAll();
+            if(listFeed.size()==0){
                 return new ResponseHandler().generateResponse(
                         "Data tidak Ditemukan",//message
                         HttpStatus.NOT_FOUND,//httpstatus
@@ -116,7 +116,7 @@ public class KipService implements IService<Kip>{
         return new ResponseHandler().generateResponse(
                 "Data Ditemukan",//message
                 HttpStatus.OK,//httpstatus OK
-                listKip,//object
+                listFeed,//object
                 null,//errorCode diisi null ketika data berhasil disimpan
                 request
         );
