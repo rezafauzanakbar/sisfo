@@ -1,19 +1,33 @@
 package com.jatiluhur.sisfo.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
+@Entity
+@Table(name = "MstKip")
 public class Kip {
-    private long nik;
+    @Id
+    @Column(name="Nik")
+    private String nik;
+
+    @Column(name ="nama")
     private String nama;
-    private LocalDate tanggalLahir;
+
+    @Column(name = "TanggalLahir")
+    private Date tanggalLahir;
+
+    @Column(name = "Alamat")
     private String alamat;
+
+    @Column(name = "Gender")
     private String gender;
 
-    public long getNik() {
+    public String getNik() {
         return nik;
     }
 
-    public void setNik(long nik) {
+    public void setNik(String nik) {
         this.nik = nik;
     }
 
@@ -25,11 +39,11 @@ public class Kip {
         this.nama = nama;
     }
 
-    public LocalDate getTanggalLahir() {
+    public Date getTanggalLahir() {
         return tanggalLahir;
     }
 
-    public void setTanggalLahir(LocalDate tanggalLahir) {
+    public void setTanggalLahir(Date tanggalLahir) {
         this.tanggalLahir = tanggalLahir;
     }
 
