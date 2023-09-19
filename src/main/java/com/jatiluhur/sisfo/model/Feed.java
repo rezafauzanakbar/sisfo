@@ -1,17 +1,27 @@
 package com.jatiluhur.sisfo.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-/*
-IntelliJ IDEA 2023.2 (Community Edition)
-Build #IC-232.8660.185, built on July 26, 2023
-@Author EmiratZ a.k.a. M Emirat Millenium Try
-Java Developer
-Created on 19/09/2023 10.53
-@Last Modified 19/09/2023 10.53
-Version 1.0
-*/
 @Entity
 public class Feed {
+    private static final Long serializeVersion = 70002L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Long idFeed;
+    @Column(name = "Comment")
+    private String comment;
+    @Column(name = "Nik")
+    private String nik;
 
+    public Long getIdFeed() {
+        return idFeed;
+    }
+
+    public void setIdFeed(Long idFeed) {
+        this.idFeed = idFeed;
+    }
+
+    @Column(name = "IsComplain")
+    private boolean isComplain;
 }
