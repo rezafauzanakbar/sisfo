@@ -10,5 +10,4 @@ public class SisfoApplication {
 		SpringApplication.run(SisfoApplication.class, args);
 		System.out.println("apol");
 	}
-
 }
