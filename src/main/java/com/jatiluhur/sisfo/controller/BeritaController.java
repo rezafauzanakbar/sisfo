@@ -24,6 +24,7 @@ public class BeritaController {
         return beritaService.getAllBerita();
     }
 
+    @GetMapping("get/{id}")
     public ResponseEntity<Berita> getBeritaById(@PathVariable Long id){
         Optional<Berita> berita = beritaService.getBeritaById(id);
         return berita.map(value -> new ResponseEntity<>(value, HttpStatus.OK))

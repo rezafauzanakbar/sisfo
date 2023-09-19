@@ -1,8 +1,8 @@
 package com.jatiluhur.sisfo.repo;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jatiluhur.sisfo.model.Berita;
 
-public interface BeritaRepo extends CrudRepository<Berita, Long> {
+public interface BeritaRepo extends JpaRepository<Berita, Long> {
 } 
