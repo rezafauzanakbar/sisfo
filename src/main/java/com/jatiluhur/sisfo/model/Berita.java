@@ -1,4 +1,6 @@
 package com.jatiluhur.sisfo.model;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Berita")
-public class Berita {
+public class Berita implements Serializable {
+    private static final long serializableVersion=7200l; 
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
