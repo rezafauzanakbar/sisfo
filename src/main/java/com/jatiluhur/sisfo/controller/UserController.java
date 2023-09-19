@@ -37,6 +37,12 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping("/v1/login")
+    public ResponseEntity<Object> getToken(@RequestBody UserDTO userDTO, HttpServletRequest request) throws Exception{
+
+        return userService.authManager(userDTO,request);
+    }
+
     @PostMapping("/v1/regis")
     public ResponseEntity<Object> save(@RequestBody UserDTO userDTO, HttpServletRequest request)
     {

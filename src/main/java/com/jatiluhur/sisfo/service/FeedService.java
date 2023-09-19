@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class FeedService implements IService<Feed>{
@@ -29,26 +30,7 @@ public class FeedService implements IService<Feed>{
 
     @Override
     public ResponseEntity<Object> save(Feed feed, HttpServletRequest request) {
-        if (feed == null) {
-            return new ResponseHandler().generateResponse(
-                    "Data tidak valid", HttpStatus.BAD_REQUEST,
-                    null, "FE002000", request
-            );
-        }
-
-        try {
-            feedRepo.save(feed);
-        } catch (Exception e) {
-            strExceptionArr[1] = "save(Feed feed, HttpServletRequest request) --- LINE 59 \n"+ RequestCapture.allRequest(request);
-            return new ResponseHandler().generateResponse(
-                    "Data Gagal Disimpan",//message
-                    HttpStatus.INTERNAL_SERVER_ERROR,//httpstatus
-                    null,//object
-                    "FE002001",//errorCode Fail Error modul-code 001 sequence 001 range 001 - 010
-                    request
-            );
-        }
-
+        feedRepo.save(feed);
         return new ResponseHandler().generateResponse(
                 "Data Berhasil Disimpan",//message
                 HttpStatus.CREATED,//httpstatus created
@@ -65,7 +47,14 @@ public class FeedService implements IService<Feed>{
 
     @Override
     public ResponseEntity<Object> delete(Long id, HttpServletRequest request) {
-        return null;
+        feedRepo.deleteById(id);
+        return new ResponseHandler().generateResponse(
+                "Data Berhasil Dihapus",//message
+                HttpStatus.CREATED,//httpstatus seharusnya no content 204 (permintaan berhasil tapi tidak ada content untuk dikirim dalam response)
+                null,//object
+                null,//errorCode diisi null ketika data berhasil disimpan
+                request
+        );
     }
 
     @Override
@@ -75,7 +64,16 @@ public class FeedService implements IService<Feed>{
 
     @Override
     public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
-        return null;
+        Optional<Feed> feed;
+        feed = feedRepo.findById(id);
+
+        return new ResponseHandler().generateResponse(
+                "Data Ditemukan",//message
+                HttpStatus.OK,//httpstatus OK
+                feed,//object
+                null,//errorCode diisi null ketika data berhasil disimpan
+                request
+        );
     }
 
     @Override
@@ -91,27 +89,7 @@ public class FeedService implements IService<Feed>{
     @Override
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
         List<Feed> listFeed;
-        try{
-            listFeed = feedRepo.findAll();
-            if(listFeed.size()==0){
-                return new ResponseHandler().generateResponse(
-                        "Data tidak Ditemukan",//message
-                        HttpStatus.NOT_FOUND,//httpstatus
-                        null,//object
-                        "FV002002",//errorCode Fail Validation modul-code 001 sequence 001 range 071 - 080
-                        request
-                );
-            }
-        } catch (Exception e){
-            strExceptionArr[1] = "findAll(HttpServletRequest request) --- LINE 382 \n" + RequestCapture.allRequest(request);
-            return new ResponseHandler().generateResponse(
-                    "Data tidak Valid",//message
-                    HttpStatus.INTERNAL_SERVER_ERROR,//httpstatus
-                    null,//object
-                    "FE002002",//errorCode Fail Validation modul-code 001 sequence 001 range 071 - 080
-                    request
-            );
-        }
+        listFeed = feedRepo.findAll();
 
         return new ResponseHandler().generateResponse(
                 "Data Ditemukan",//message
