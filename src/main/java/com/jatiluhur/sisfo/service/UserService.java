@@ -10,6 +10,7 @@ Version 1.0
 */
 
 import com.jatiluhur.sisfo.core.IService;
+import com.jatiluhur.sisfo.dto.UserDTO;
 import com.jatiluhur.sisfo.handler.ResponseHandler;
 import com.jatiluhur.sisfo.model.User;
 import com.jatiluhur.sisfo.repo.UserRepo;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService implements IService<User> {
@@ -68,6 +69,38 @@ public class UserService implements IService<User> {
         );
     }
 
+    public ResponseEntity<Object> authManager(UserDTO userDTO, HttpServletRequest request)//RANGE 006-010
+    {
+        Optional<User> user = userRepo.findByNikAndPassword(userDTO.getNik(), userDTO.getPassword());
+        User usrNext = user.get();
+
+        if(usrNext.getNik() == null)
+        {
+            return new ResponseHandler().generateResponse(
+                    "Otentikasi Gagal",//message
+                    HttpStatus.OK,//httpstatus created
+                    null,//object
+                    null,//errorCode diisi null ketika data berhasil disimpan
+                    request
+            );
+        } else {
+            Map<String,Object> mapz = new HashMap<>();
+            mapz.put("Nik",usrNext.getNik());
+            mapz.put("firstName",usrNext.getFirstName());
+            mapz.put("lastName",usrNext.getLastName());
+            mapz.put("status",usrNext.getStatus());
+            mapz.put("tanggalLahir",usrNext.getTanggalLahir());
+
+            return new ResponseHandler().generateResponse(
+                    "Otentikasi Berhasil",//message
+                    HttpStatus.OK,//httpstatus created
+                    mapz,//object
+                    null,//errorCode diisi null ketika data berhasil disimpan
+                    request
+            );
+        }
+    }
+
     @Override
     public ResponseEntity<Object> update(Long id, User user, HttpServletRequest request) throws Exception {
         return null;
@@ -107,4 +140,5 @@ public class UserService implements IService<User> {
     public ResponseEntity<Object> dataToExport(MultipartFile multipartFile, HttpServletRequest request) {
         return null;
     }
+
 }

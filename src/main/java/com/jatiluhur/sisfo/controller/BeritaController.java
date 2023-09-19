@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,19 +19,16 @@ import com.jatiluhur.sisfo.service.BeritaService;
 @RestController
 @RequestMapping("/api/berita")
 public class BeritaController {
-    
-    private BeritaService beritaService;
 
-    @GetMapping("/get")
-    public ResponseEntity<Object> findAll(HttpServletRequest request)
-    {
-        return beritaService.findAll(request);
+    private final BeritaService beritaService;
+
+    @Autowired
+    public BeritaController(BeritaService beritaService) {
+        this.beritaService = beritaService;
     }
 
-    @GetMapping("get/{id}")
-    public ResponseEntity<Berita> getBeritaById(@PathVariable Long id){
-        Optional<Berita> berita = beritaService.getBeritaById(id);
-        return berita.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/get")
+    public ResponseEntity<List<Berita>> findAll(HttpServletRequest request) {
+        return beritaService.findAll();
     }
 }

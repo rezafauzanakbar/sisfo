@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class KipService implements IService<Kip>{
@@ -60,13 +61,49 @@ public class KipService implements IService<Kip>{
 
     @Override
     public ResponseEntity<Object> update(Long id, Kip kip, HttpServletRequest request) throws Exception {
-        return null;
+            return null;
     }
 
     @Override
     public ResponseEntity<Object> delete(Long id, HttpServletRequest request) {
         return null;
     }
+
+//    @Override
+//    public ResponseEntity<Object> deleteByNik(String nik, HttpServletRequest request){
+//        Optional<Kip> barangTrans =  kipRepo.findByNik(nik);
+//
+//        if(barangTrans.isEmpty())
+//        {
+//            return new ResponseHandler().generateResponse(
+//                    "Data tidak Valid",//message
+//                    HttpStatus.BAD_REQUEST,//httpstatus
+//                    null,//object
+//                    "FV002021",//errorCode Fail Validation modul-code 001 sequence 001 range 021 - 030
+//                    request
+//            );
+//        }
+//
+//        try{
+//            kipRepo.deleteByNik(nik, request);
+//        }catch (Exception e)
+//        {
+//            return new ResponseHandler().generateResponse(
+//                    "Data Gagal Dihapus",//message
+//                    HttpStatus.INTERNAL_SERVER_ERROR,//httpstatus
+//                    null,//object
+//                    "FE002021",//errorCode Fail Error modul-code 001 sequence 001 range 021 - 030
+//                    request
+//            );
+//        }
+//        return new ResponseHandler().generateResponse(
+//                "Data Berhasil Dihapus",//message
+//                HttpStatus.CREATED,//httpstatus seharusnya no content 204 (permintaan berhasil tapi tidak ada content untuk dikirim dalam response)
+//                null,//object
+//                null,//errorCode diisi null ketika data berhasil disimpan
+//                request
+//        );
+//    }
 
     @Override
     public ResponseEntity<Object> saveBatch(List<Kip> lt, HttpServletRequest request) {
