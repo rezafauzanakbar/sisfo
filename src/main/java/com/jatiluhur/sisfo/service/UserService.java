@@ -9,28 +9,31 @@ Created on 19/09/2023 11:31
 Version 1.0
 */
 
-import com.jatiluhur.sisfo.core.UsrService;
+import com.jatiluhur.sisfo.core.IService;
 import com.jatiluhur.sisfo.handler.ResponseHandler;
 import com.jatiluhur.sisfo.model.User;
 import com.jatiluhur.sisfo.repo.UserRepo;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-public class UserService implements UsrService<User> {
+@Service
+public class UserService implements IService<User> {
 
     private UserRepo userRepo;
 
-    private ModelMapper modelMapper;
-
-    public UserService(UserRepo userRepo, ModelMapper modelMapper) {
+    public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
-        this.modelMapper = modelMapper;
     }
 
-    public ResponseEntity<Object> registrationUser(User user, HttpServletRequest request) {
+    @Override
+    public ResponseEntity<Object> save(User user, HttpServletRequest request) {
         if(user==null)
         {
             return new ResponseHandler().generateResponse(
@@ -63,5 +66,45 @@ public class UserService implements UsrService<User> {
                 null,//errorCode diisi null ketika data berhasil disimpan
                 request
         );
+    }
+
+    @Override
+    public ResponseEntity<Object> update(Long id, User user, HttpServletRequest request) throws Exception {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> delete(Long id, HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> saveBatch(List<User> lt, HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> findByPage(Integer page, Integer size, String columFirst, String valueFirst, HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> findAllByPage(Integer page, Integer size, HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> findAll(HttpServletRequest request) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Object> dataToExport(MultipartFile multipartFile, HttpServletRequest request) {
+        return null;
     }
 }

@@ -30,21 +30,20 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
     private UserService userService;
 
     @Autowired
-    public UserController(ModelMapper modelMapper, UserService userService) {
-        this.modelMapper = modelMapper;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/v1/regis")
-    public ResponseEntity<Object> regis(@RequestBody UserDTO userDTO, HttpServletRequest request)
+    public ResponseEntity<Object> save(@RequestBody UserDTO userDTO, HttpServletRequest request)
     {
 
         User user = modelMapper.map(userDTO, new TypeToken<User>() {}.getType());;
-
-        return userService.registrationUser(user,request);
+        return userService.save(user,request);
     }
+
+
 }
