@@ -32,7 +32,7 @@ public class KipService implements IService<Kip>{
         if (kip == null) {
             return new ResponseHandler().generateResponse(
                     "Data tidak valid", HttpStatus.BAD_REQUEST,
-                    null, "ERR0221", request
+                    null, "FE002000", request
             );
         }
 
@@ -90,7 +90,36 @@ public class KipService implements IService<Kip>{
 
     @Override
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
-        return null;
+        List<Kip> listKip;
+        try{
+            listKip = kipRepo.findAll();
+            if(listKip.size()==0){
+                return new ResponseHandler().generateResponse(
+                        "Data tidak Ditemukan",//message
+                        HttpStatus.NOT_FOUND,//httpstatus
+                        null,//object
+                        "FV002002",//errorCode Fail Validation modul-code 001 sequence 001 range 071 - 080
+                        request
+                );
+            }
+        } catch (Exception e){
+            strExceptionArr[1] = "findAll(HttpServletRequest request) --- LINE 382 \n" + RequestCapture.allRequest(request);
+            return new ResponseHandler().generateResponse(
+                    "Data tidak Valid",//message
+                    HttpStatus.INTERNAL_SERVER_ERROR,//httpstatus
+                    null,//object
+                    "FE002002",//errorCode Fail Validation modul-code 001 sequence 001 range 071 - 080
+                    request
+            );
+        }
+
+        return new ResponseHandler().generateResponse(
+                "Data Ditemukan",//message
+                HttpStatus.OK,//httpstatus OK
+                listKip,//object
+                null,//errorCode diisi null ketika data berhasil disimpan
+                request
+        );
     }
 
     @Override
