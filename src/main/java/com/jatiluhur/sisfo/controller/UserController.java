@@ -13,15 +13,14 @@ import com.jatiluhur.sisfo.dto.UserDTO;
 import com.jatiluhur.sisfo.model.User;
 import com.jatiluhur.sisfo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
@@ -49,6 +48,13 @@ public class UserController {
 
         User user = modelMapper.map(userDTO, new TypeToken<User>() {}.getType());;
         return userService.save(user,request);
+    }
+
+    @PutMapping("/v1/upd/{nik}")
+    public ResponseEntity<Object> update(@PathVariable(value = "nik") String nik, @RequestBody UserDTO userDTO, HttpServletRequest request) throws Exception
+    {
+        User user = modelMapper.map(userDTO, new TypeToken<User>() {}.getType());
+        return userService.update(nik,user,request);
     }
 
 
