@@ -1,20 +1,16 @@
 package com.jatiluhur.sisfo.service;
-import com.jatiluhur.sisfo.handler.RequestCapture;
 import com.jatiluhur.sisfo.handler.ResponseHandler;
 import com.jatiluhur.sisfo.model.Feed;
-import com.jatiluhur.sisfo.model.Kip;
-import com.jatiluhur.sisfo.util.TransformDataPaging;
 import com.jatiluhur.sisfo.repo.FeedRepo;
 import com.jatiluhur.sisfo.core.IService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -60,17 +56,32 @@ public class FeedService implements IService<Feed>{
 
     @Override
     public ResponseEntity<Object> delete(Long id, HttpServletRequest request) {
-        return null;
+        feedRepo.deleteById(id);
+        return new ResponseHandler().generateResponse(
+                "Data Berhasil Dihapus",//message
+                HttpStatus.CREATED,//httpstatus seharusnya no content 204 (permintaan berhasil tapi tidak ada content untuk dikirim dalam response)
+                null,//object
+                null,//errorCode diisi null ketika data berhasil disimpan
+                request
+        );
     }
 
     @Override
     public ResponseEntity<Object> saveBatch(List<Feed> lt, HttpServletRequest request) {
         return null;
     }
-
+    @GetMapping("/get/{id}")
     @Override
     public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
-        return null;
+        Optional<Feed> feed;
+        feed  = feedRepo.findById(id);
+        return new ResponseHandler().generateResponse(
+                "Data Ditemukan",//message
+                HttpStatus.OK,//httpstatus OK
+                feed,//object
+                null,//errorCode diisi null ketika data berhasil disimpan
+                request
+        );
     }
 
     @Override
