@@ -19,5 +19,4 @@ public interface IService<T> {
     public ResponseEntity<Object> findAll(HttpServletRequest request);//071-080
     public ResponseEntity<Object> dataToExport(MultipartFile multipartFile, HttpServletRequest request);//081-090
 
-//    public ResponseEntity<Object> deleteByNik(String nik, HttpServletRequest request);
 }

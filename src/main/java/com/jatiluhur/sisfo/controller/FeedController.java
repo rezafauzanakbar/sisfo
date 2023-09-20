@@ -2,6 +2,7 @@ package com.jatiluhur.sisfo.controller;
 
 import com.jatiluhur.sisfo.model.Feed;
 import com.jatiluhur.sisfo.service.FeedService;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,16 @@ public class FeedController {
     {
         return feedService.save(feed,request);
     }
+    @PutMapping("/upd/{id}")
+    public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody Feed feed, HttpServletRequest request)
+            throws Exception
+    {
+        return feedService.update(id, feed, request);
+    }
     @DeleteMapping("/del/{id}")
     public ResponseEntity<Object> delete(@PathVariable(value = "id") Long id, HttpServletRequest request)
     {
-        return feedService.delete(id,request);
+        return feedService.delete(id, request);
     }
     @GetMapping("/findall")
     public ResponseEntity<Object> findAll(HttpServletRequest request)

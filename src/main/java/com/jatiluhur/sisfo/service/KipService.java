@@ -1,6 +1,7 @@
 package com.jatiluhur.sisfo.service;
 import com.jatiluhur.sisfo.handler.RequestCapture;
 import com.jatiluhur.sisfo.handler.ResponseHandler;
+//import com.jatiluhur.sisfo.model.kip;
 import com.jatiluhur.sisfo.model.Kip;
 import com.jatiluhur.sisfo.util.TransformDataPaging;
 import com.jatiluhur.sisfo.repo.KipRepo;
@@ -17,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class KipService implements IService<Kip>{
+public class KipService implements IService<Kip> {
     private KipRepo kipRepo;
     private String[] strExceptionArr = new String[2];
     private TransformDataPaging transformDataPaging = new TransformDataPaging();
@@ -40,7 +41,7 @@ public class KipService implements IService<Kip>{
         try {
             kipRepo.save(kip);
         } catch (Exception e) {
-            strExceptionArr[1] = "save(Kip kip, HttpServletRequest request) --- LINE 59 \n"+ RequestCapture.allRequest(request);
+            strExceptionArr[1] = "save(Kip kip, HttpServletRequest request) --- LINE 59 \n" + RequestCapture.allRequest(request);
             return new ResponseHandler().generateResponse(
                     "Data Gagal Disimpan",//message
                     HttpStatus.INTERNAL_SERVER_ERROR,//httpstatus
@@ -60,50 +61,66 @@ public class KipService implements IService<Kip>{
     }
 
     @Override
-    public ResponseEntity<Object> update(Long id, Kip kip, HttpServletRequest request) throws Exception {
-            return null;
+    public ResponseEntity<Object> update(Long id, Kip updatedKip, HttpServletRequest request) throws Exception {
+        try {
+            Optional<Kip> existingKip = kipRepo.findById(id);
+            if (existingKip.isPresent()) {
+                Kip kip = existingKip.get();
+                kip.setNama(updatedKip.getNama());
+                kip.setAlamat(updatedKip.getAlamat());
+                kip.setTanggalLahir(updatedKip.getTanggalLahir());
+                Kip updated = kipRepo.save(kip);
+
+                HttpStatus status = HttpStatus.OK;
+                String message = "Data berhasil diperbarui";
+                return new ResponseHandler().generateResponse(message, status, updated, null, request);
+            } else {
+                HttpStatus status = HttpStatus.NOT_FOUND;
+                String message = "Data dengan ID " + id + " tidak Ditemukan";
+                return new ResponseHandler().generateResponse(message, status, null, null, request);
+            }
+        } catch (Exception e) {
+            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+            String message = "Gagal memperbarui data";
+            return new ResponseHandler().generateResponse(message, status, null, null, request);
+        }
     }
 
     @Override
     public ResponseEntity<Object> delete(Long id, HttpServletRequest request) {
-        return null;
-    }
+        Optional<Kip> kipTrans =  kipRepo.findById(id);
 
-//    @Override
-//    public ResponseEntity<Object> deleteByNik(String nik, HttpServletRequest request){
-//        Optional<Kip> barangTrans =  kipRepo.findByNik(nik);
-//
-//        if(barangTrans.isEmpty())
-//        {
-//            return new ResponseHandler().generateResponse(
-//                    "Data tidak Valid",//message
-//                    HttpStatus.BAD_REQUEST,//httpstatus
-//                    null,//object
-//                    "FV002021",//errorCode Fail Validation modul-code 001 sequence 001 range 021 - 030
-//                    request
-//            );
-//        }
-//
-//        try{
-//            kipRepo.deleteByNik(nik, request);
-//        }catch (Exception e)
-//        {
-//            return new ResponseHandler().generateResponse(
-//                    "Data Gagal Dihapus",//message
-//                    HttpStatus.INTERNAL_SERVER_ERROR,//httpstatus
-//                    null,//object
-//                    "FE002021",//errorCode Fail Error modul-code 001 sequence 001 range 021 - 030
-//                    request
-//            );
-//        }
-//        return new ResponseHandler().generateResponse(
-//                "Data Berhasil Dihapus",//message
-//                HttpStatus.CREATED,//httpstatus seharusnya no content 204 (permintaan berhasil tapi tidak ada content untuk dikirim dalam response)
-//                null,//object
-//                null,//errorCode diisi null ketika data berhasil disimpan
-//                request
-//        );
-//    }
+        if(kipTrans.isEmpty())
+        {
+            return new ResponseHandler().generateResponse(
+                    "Data tidak Valid",//message
+                    HttpStatus.BAD_REQUEST,//httpstatus
+                    null,//object
+                    "FV002021",//errorCode Fail Validation modul-code 001 sequence 001 range 021 - 030
+                    request
+            );
+        }
+
+        try{
+            kipRepo.deleteById(id);
+        }catch (Exception e)
+        {
+            return new ResponseHandler().generateResponse(
+                    "Data Gagal Dihapus",//message
+                    HttpStatus.INTERNAL_SERVER_ERROR,//httpstatus
+                    null,//object
+                    "FE002021",//errorCode Fail Error modul-code 001 sequence 001 range 021 - 030
+                    request
+            );
+        }
+        return new ResponseHandler().generateResponse(
+                "Data Berhasil Dihapus",//message
+                HttpStatus.CREATED,//httpstatus seharusnya no content 204 (permintaan berhasil tapi tidak ada content untuk dikirim dalam response)
+                null,//object
+                null,//errorCode diisi null ketika data berhasil disimpan
+                request
+        );
+    }
 
     @Override
     public ResponseEntity<Object> saveBatch(List<Kip> lt, HttpServletRequest request) {
@@ -128,9 +145,9 @@ public class KipService implements IService<Kip>{
     @Override
     public ResponseEntity<Object> findAll(HttpServletRequest request) {
         List<Kip> listKip;
-        try{
+        try {
             listKip = kipRepo.findAll();
-            if(listKip.size()==0){
+            if (listKip.size() == 0) {
                 return new ResponseHandler().generateResponse(
                         "Data tidak Ditemukan",//message
                         HttpStatus.NOT_FOUND,//httpstatus
@@ -139,7 +156,7 @@ public class KipService implements IService<Kip>{
                         request
                 );
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             strExceptionArr[1] = "findAll(HttpServletRequest request) --- LINE 382 \n" + RequestCapture.allRequest(request);
             return new ResponseHandler().generateResponse(
                     "Data tidak Valid",//message
