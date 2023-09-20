@@ -31,7 +31,7 @@ public class Imunisasi    {
     }
 
     public String getStatus() {
-        return status;
+        return status;  
     }
 
     public void setStatus(String status) {
