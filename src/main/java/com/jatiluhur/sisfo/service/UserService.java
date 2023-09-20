@@ -10,6 +10,7 @@ Version 1.0
 */
 
 import com.jatiluhur.sisfo.core.IService;
+import com.jatiluhur.sisfo.core.UsrService;
 import com.jatiluhur.sisfo.dto.UserDTO;
 import com.jatiluhur.sisfo.handler.ResponseHandler;
 import com.jatiluhur.sisfo.model.User;
@@ -25,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
-public class UserService implements IService<User> {
+public class UserService implements UsrService<User> {
 
     private UserRepo userRepo;
 
@@ -102,12 +103,12 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public ResponseEntity<Object> update(Long id, User user, HttpServletRequest request) throws Exception {
+    public ResponseEntity<Object> update(String nik, User user, HttpServletRequest request) throws Exception {
         return null;
     }
 
     @Override
-    public ResponseEntity<Object> delete(Long id, HttpServletRequest request) {
+    public ResponseEntity<Object> delete(String nik, HttpServletRequest request) {
         return null;
     }
 
@@ -117,7 +118,7 @@ public class UserService implements IService<User> {
     }
 
     @Override
-    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
+    public ResponseEntity<Object> findById(String nik, HttpServletRequest request) {
         return null;
     }
 
@@ -140,5 +141,4 @@ public class UserService implements IService<User> {
     public ResponseEntity<Object> dataToExport(MultipartFile multipartFile, HttpServletRequest request) {
         return null;
     }
-
 }

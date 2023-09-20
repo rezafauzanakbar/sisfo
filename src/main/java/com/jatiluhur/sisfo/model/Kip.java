@@ -9,7 +9,7 @@ import java.util.Date;
 public class Kip {
     @Id
     @Column(name="Nik")
-    private String nik;
+    private Long nik;
 
     @Column(name ="nama")
     private String nama;
@@ -23,11 +23,11 @@ public class Kip {
     @Column(name = "Gender")
     private String gender;
 
-    public String getNik() {
+    public Long getNik() {
         return nik;
     }
 
-    public void setNik(String nik) {
+    public void setNik(Long nik) {
         this.nik = nik;
     }
 
