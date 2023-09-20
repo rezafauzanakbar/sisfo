@@ -41,23 +41,11 @@ public class KipController {
         return kipService.delete(id,request);
     }
 
-//    @PutMapping("/v1/upd/{id}")
-//    public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody Kip kip, HttpServletRequest request)
-//            throws Exception
-//    {
-//        return kipService.update(id,kip,request);
-//    }
-
-    @PutMapping("/v1/upd/{id}")
+    @PutMapping("/upd/{id}")
     public ResponseEntity<Object> update(@PathVariable(value = "id") Long id, @RequestBody Kip kip, HttpServletRequest request)
             throws Exception
     {
         return kipService.update(id,kip,request);
     }
 
-//    @DeleteMapping("/del/{nik}")
-//    public ResponseEntity<Object> deleteByNik(@PathVariable(value = "nik") String nik, HttpServletRequest request)
-//    {
-//        return kipService.deleteByNik(nik, request);
-//    }
 }
